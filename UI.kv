@@ -1,0 +1,1289 @@
+# DEVELOPED BY PRASHANT AND TEAM 12 (FIT3164)
+# START OF UI DESIGN FILE (UI.kv)
+
+# Create account window
+<CreateAccountWindow>:
+
+    # Window name (id)
+    name: "create"
+
+    # Variables used in this window
+    full_name: full_name
+    email: email
+    password: passw
+
+    # Layout for this window is a float layout
+    # "Labels" are text displays and "TextInputs" are input fields
+    FloatLayout:
+        cols:1
+        FloatLayout:
+            size: root.width, root.height/2
+
+            Label:
+                text: "Create an Account"
+                size_hint: 0.8, 0.2
+                pos_hint: {"x":0.1, "top":1}
+                font_size: 28
+                font_name: 'Montserrat Regular 400'
+                color: (87/255.0, 85/255.0, 85/255.0, 1)
+                bold: True
+
+            Label:
+                size_hint: 0.5,0.12
+                pos_hint: {"x":0, "top":0.8}
+                text: "Full Name: "
+                font_size: 22
+                font_name: 'Montserrat Regular 400'
+                color: (0, 0, 0, 1)
+
+            TextInput:
+                pos_hint: {"x":0.5, "top":0.8}
+                id: full_name
+                multiline: False
+                font_size: 22
+                font_name: 'Montserrat Regular 400'
+                multiline: False
+                back_color: (0.157, 0.455, 0.753, 1.0)
+                size_hint: 0.4, 0.1
+                hint_text: 'Type name here'
+
+            Label:
+                size_hint: 0.5,0.12
+                pos_hint: {"x":0, "top":0.8-0.13}
+                text: "Email: "
+                font_size: 22
+                font_name: 'Montserrat Regular 400'
+                color: (0, 0, 0, 1)
+
+            TextInput:
+                pos_hint: {"x":0.5, "top":0.8-0.13}
+                size_hint: 0.4, 0.1
+                id: email
+                font_size: 22
+                font_name: 'Montserrat Regular 400'
+                multiline: False
+                back_color: (0.157, 0.455, 0.753, 1.0)
+                size_hint: 0.4, 0.1
+                hint_text: 'Type email here'
+
+            Label:
+                size_hint: 0.5,0.12
+                pos_hint: {"x":0, "top":0.8-0.13*2}
+                text: "Password: "
+                font_size: 22
+                font_name: 'Montserrat Regular 400'
+                color: (0, 0, 0, 1)
+
+            TextInput:
+                pos_hint: {"x":0.5, "top":0.8-0.13*2}
+                size_hint: 0.4, 0.1
+                id: passw
+                font_size: 22
+                font_name: 'Montserrat Regular 400'
+                multiline: False
+                back_color: (0.157, 0.455, 0.753, 1.0)
+                size_hint: 0.4, 0.1
+                hint_text: 'Type password here'
+                # Hide password characters when typing, for security purposes
+                password: True
+
+        HaveAccountButton:
+            pos_hint: {"x":0.25,"y":0.2}
+            size_hint: 0.5, 0.08
+            font_size: (root.width**2 + root.height**2) / 16**4
+            text: "Already have an Account? Log In"
+            on_release:
+                # Transition animation between pages
+                root.manager.transition.direction = "left"
+                # Call the login() function from UI_main after clicking
+                root.login()
+
+        SubmitButton:
+            pos_hint: {"x":0.25,"y":0.1}
+            size_hint: 0.5, 0.08
+            text: "Submit"
+            font_size: (root.width**2 + root.height**2) / 15**4
+            on_release:
+                # Transition animation between pages
+                root.manager.transition.direction = "left"
+                # Call the submit() function from UI_main after clicking
+                root.submit()
+
+        ForgotPasswordButton:
+            pos_hint: {"x":0.25,"y":0.02}
+            size_hint: 0.5, 0.08
+            font_size: (root.width**2 + root.height**2) / 16**4
+            font_name: 'Montserrat Regular 400'
+            text: "Forgot password?"
+            back_color: (87/255.0, 85/255.0, 85/255.0, 1)
+            on_release:
+                # Transition animation between pages
+                root.manager.transition.direction = "up"
+                # Move to "ForgotPasswordWindow" after clicking
+                app.root.current = "forgotpassw"
+
+# Button styles for buttons created above
+<HaveAccountButton@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (173/255.0, 136/255.0, 132/255.0, 1)
+    border_radius: [24]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<SubmitButton@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [24]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<ForgotPasswordButton@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (87/255.0, 85/255.0, 85/255.0, 1)
+    color: self.back_color
+    bold: True
+    underline: True
+
+
+# NEXT WINDOW
+
+
+# Forgot password window
+<ForgotPasswordWindow>:
+
+    # Name/ID of the window
+    name: "forgotpassw"
+
+    # Variables used in the window
+    email: email
+    full_name: full_name
+    new_passw: new_passw
+
+    # Window uses a float layout
+    FloatLayout:
+
+        Image:
+            source: 'heart.png'
+            size_hint_y: None
+            height: dp(110)
+            pos_hint: {"top":0.92}
+
+        Label:
+            text:"    Heart Disease\nPrediction System "
+            font_size: 26
+            font_name: 'Montserrat Regular 400'
+            color: (87/255.0, 85/255.0, 85/255.0, 1)
+            bold: True
+            pos_hint: {"x":0.3, "top":0.73}
+            size_hint: 0.4, 0.15
+
+        Label:
+            text: "Forgot your password?"
+            font_size: 24
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.3, "top":0.6}
+            size_hint: 0.4, 0.15
+
+        Label:
+            text: "This version of the software does not support email verification. To use the same"
+            font_size: 18
+            font_name: 'Montserrat Regular 400'
+            color: (87/255.0, 85/255.0, 85/255.0, 1)
+            pos_hint: {"x":0.3, "top":0.53}
+            size_hint: 0.4, 0.15
+
+        Label:
+            text: "email again, verify the name you've used, and key in your new password."
+            font_size: 18
+            font_name: 'Montserrat Regular 400'
+            color: (87/255.0, 85/255.0, 85/255.0, 1)
+            pos_hint: {"x":0.3, "top":0.48}
+            size_hint: 0.4, 0.15
+
+        Label:
+            text: "Email:"
+            font_size: 20
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.1, "top":0.4}
+            size_hint: 0.4, 0.15
+
+        Label:
+            text: "Full Name:"
+            font_size: 20
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.1, "top":0.33}
+            size_hint: 0.4, 0.15
+
+        Label:
+            text: "New Password:"
+            font_size: 20
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.1, "top":0.26}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            id: email
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            multiline: False
+            pos_hint: {"x": 0.5 , "top":0.35}
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            size_hint: 0.4, 0.06
+            hint_text: 'Enter email here'
+
+        TextInput:
+            id: full_name
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            multiline: False
+            pos_hint: {"x": 0.5 , "top":0.28}
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            size_hint: 0.4, 0.06
+            hint_text: 'Enter full name here'
+
+        TextInput:
+            id: new_passw
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            multiline: False
+            pos_hint: {"x": 0.5 , "top":0.21}
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            size_hint: 0.4, 0.06
+            hint_text: 'Enter new password here'
+            # Hide password characters for security purposes
+            password: True
+
+        SubmitNewPasswordBtn:
+            pos_hint: {"x":0.52,"y":0.05}
+            size_hint: 0.3, 0.07
+            font_name: 'Montserrat Regular 400'
+            text: "Submit"
+            font_size: (root.width**2 + root.height**2) / 15**4
+            on_release:
+                # Transition animation when clicked
+                root.manager.transition.direction = "left"
+                # Call the submit function from the root class (ForgotPasswordWindow class)
+                root.submit()
+
+        BackToLoginBtn:
+            pos_hint: {"x":0.18,"y":0.05}
+            size_hint: 0.3, 0.07
+            font_name: 'Montserrat Regular 400'
+            text: "Back to log in page"
+            font_size: (root.width**2 + root.height**2) / 15**4
+            on_release:
+                # Transition animation when clicked
+                root.manager.transition.direction = "down"
+                # Move back to the login page when clicked
+                app.root.current = "login"
+
+# Style for the buttons created above
+<SubmitNewPasswordBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [24]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<BackToLoginBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [24]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+
+# NEXT WINDOW
+
+
+# Login Window
+<LoginWindow>:
+
+    # Name/id of the window
+    name: "login"
+
+    # Variables used in the window
+    email: email
+    password: password
+
+    # Float layout used in the window
+    FloatLayout:
+
+        Image:
+            source: 'heart.png'
+            size_hint_y: None
+            height: dp(110)
+            pos_hint: {"top":0.92}
+
+        Label:
+            text:"    Heart Disease\nPrediction System "
+            font_size: 26
+            font_name: 'Montserrat Regular 400'
+            color: (87/255.0, 85/255.0, 85/255.0, 1)
+            bold: True
+            pos_hint: {"x":0.3, "top":0.73}
+            size_hint: 0.4, 0.15
+
+        Label:
+            text: "Email: "
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0, "top":0.52}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            id: email
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            multiline: False
+            pos_hint: {"x": 0.4 , "top":0.48}
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            size_hint: 0.55, 0.06
+            hint_text: 'Type username here'
+
+        Label:
+            text: "Password: "
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0, "top":0.43}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            id: password
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            multiline: False
+            # Hide password characters when keying in, for security purposes
+            password: True
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x": 0.4, "top":0.39}
+            size_hint: 0.55, 0.06
+            hint_text: 'Type password here'
+
+        LogInBtn:
+            pos_hint: {"x":0.25,"y":0.2}
+            size_hint: 0.5, 0.07
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            text: "Log in"
+            back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+            on_release:
+                # Transition animation when button is clicked
+                root.manager.transition.direction = "up"
+                # Call the login_btn() function from the root class
+                root.login_btn()
+
+        ForgotPassBtn:
+            pos_hint: {"x":0.25,"y":0.02}
+            size_hint: 0.5, 0.08
+            font_size: (root.width**2 + root.height**2) / 16**4
+            font_name: 'Montserrat Regular 400'
+            text: "Forgot password?"
+            back_color: (87/255.0, 85/255.0, 85/255.0, 1)
+            on_release:
+                # Transition animation when button is clicked
+                root.manager.transition.direction = "up"
+                # Move to the forgot password page when clicked
+                app.root.current = "forgotpassw"
+
+        SignUpBtn:
+            pos_hint: {"x":0.25,"y":0.11}
+            size_hint: 0.5, 0.07
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            text: "Sign Up"
+            back_color: (173/255.0, 136/255.0, 132/255.0, 1)
+            on_release:
+                # Transition animation when button is clicked
+                root.manager.transition.direction = "right"
+                # Call the create_btn() function from the root class
+                root.create_btn()
+
+# Style for the buttons created above
+<LogInBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (173/255.0, 136/255.0, 132/255.0, 1)
+    border_radius: [24]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<SignUpBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [24]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<ForgotPassBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (87/255.0, 85/255.0, 85/255.0, 1)
+    color: self.back_color
+    bold: True
+    underline: True
+
+
+# NEXT WINDOW
+
+
+# Window for the main menu
+<MainWindow>:
+
+    # Name/id for the window
+    name: "main"
+
+    # This window uses a float layout
+    FloatLayout:
+
+        Image:
+            source: 'heart.png'
+            size_hint_y: None
+            height: dp(90)
+            pos_hint: {"top":0.89}
+
+        RunPredictionBtn:
+            pos_hint: {"x":0.2, "y": 0.5}
+            size_hint: 0.6,0.15
+            text: "Run Predictions"
+            font_size: (root.width**2 + root.height**2) / 14**4
+            font_name: 'Montserrat Regular 400'
+            on_release:
+                # Move to the first prediction input page
+                app.root.current = "prediction"
+                # Transition animation when the page moves
+                root.manager.transition.direction = "left"
+
+        SoftwareInfoBtn:
+            pos_hint: {"x":0.2, "y": 0.3}
+            size_hint: 0.6,0.15
+            text: "Software Info"
+            font_size: (root.width**2 + root.height**2) / 14**4
+            font_name: 'Montserrat Regular 400'
+            on_release:
+                # Move to the info page
+                app.root.current = "info"
+                # Transition animation when the page moves
+                root.manager.transition.direction = "left"
+
+        LogOutBtn:
+            pos_hint: {"x":0.2, "y": 0.1}
+            size_hint: 0.6,0.15
+            text: "Log Out"
+            font_size: (root.width**2 + root.height**2) / 14**4
+            font_name: 'Montserrat Regular 400'
+            on_release:
+                # Move to the login page
+                app.root.current = "login"
+                # Transition animation when the page moves
+                root.manager.transition.direction = "down"
+
+# Style for buttons created above
+<RunPredictionBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [50]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<SoftwareInfoBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [50]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<LogOutBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [50]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+
+# NEXT WINDOW
+
+
+# Software Information Window
+<InfoWindow>:
+
+    # Name/id for the window
+    name: "info"
+
+    # This window uses a float layout
+    FloatLayout:
+
+        Image:
+            source: 'heart.png'
+            size_hint_y: None
+            height: dp(90)
+            pos_hint: {"top":0.89}
+
+        Label:
+            text: "The Heart Disease Prediction System performs complex computations"
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (176/255.0, 94/255.0, 84/255.0, 1)
+            pos_hint: {"x":0.3, "y": 0.54}
+            size_hint: 0.4, 0.15
+
+        Label:
+            text: "to predict the occurrence of heart disease in a patient. For more info,"
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (176/255.0, 94/255.0, 84/255.0, 1)
+            pos_hint: {"x":0.3, "y": 0.5}
+            size_hint: 0.4, 0.15
+
+        Label:
+            text: "read the End User Guide Here : http://bit.ly/EndUserGuide"
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (176/255.0, 94/255.0, 84/255.0, 1)
+            pos_hint: {"x":0.3, "y": 0.46}
+            size_hint: 0.4, 0.15
+
+        Label:
+            text: "Software Version:  1.0 "
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (87/255.0, 85/255.0, 85/255.0, 1)
+            pos_hint: {"x":0.3, "y": 0.3}
+            size_hint: 0.4, 0.15
+
+        BackButton:
+            pos_hint: {"x":0.415, "y": 0.15}
+            size_hint: 0.17,0.07
+            text: "Back"
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            on_release:
+                # Go back to the main menu
+                app.root.current = "main"
+                # Transition animation when clicked
+                root.manager.transition.direction = "right"
+
+        Label:
+            text: "Developed by Prash and Team 12"
+            font_size: (root.width**2 + root.height**2) / 16.5**4
+            font_name: 'Montserrat Regular 400'
+            color: (173/255.0, 136/255.0, 132/255.0, 1)
+            pos_hint: {"x":0.3, "y": 0.0}
+            size_hint: 0.4, 0.15
+
+# Style for button created above
+<BackButton@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [25]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+
+# NEXT WINDOW
+
+
+# First prediction window to take in first set of user inputs
+<PredictionWindow1>:
+
+    # Name/id of the window
+    name: "prediction"
+
+    # Variables used in the window
+    userinput1 : userinput1
+    userinput2 : userinput2
+    userinput3 : userinput3
+    userinput4 : userinput4
+    userinput5 : userinput5
+    userinput6 : userinput6
+    userinput7 : userinput7
+    userinput8 : userinput8
+    userinput9 : userinput9
+    userinput10 : userinput10
+
+    # This window uses a float layout
+    FloatLayout:
+
+        Image:
+            source: 'heart.png'
+            size_hint_y: None
+            height: dp(50)
+            pos_hint: {"x": -0.12,"top":0.925}
+
+        Label:
+            text:"    Heart Disease\nPrediction System "
+            font_size: 20
+            font_name: 'Montserrat Regular 400'
+            color: (87/255.0, 85/255.0, 85/255.0, 1)
+            bold: True
+            pos_hint: {"x":0.35, "top":0.96}
+            size_hint: 0.4, 0.15
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature1
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.82}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput1
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.765}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 1 and 125'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature2
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.76}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput2
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.705}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 1 and 450 in kg'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature3
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.70}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput3
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.645}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 50 and 300 in cm'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature4
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.64}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput4
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.585}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 0 and 50'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature5
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.58}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput5
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.525}
+            size_hint: 0.4, 0.04
+            hint_text: 'O or 1'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature6
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.52}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput6
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.465}
+            size_hint: 0.4, 0.04
+            hint_text: '0 to 150'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature7
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.46}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput7
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.405}
+            size_hint: 0.4, 0.04
+            hint_text: 'O or 1'
+
+        Label
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature8
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.40}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput8
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.345}
+            size_hint: 0.4, 0.04
+            hint_text: 'O or 1'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature9
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.34}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput9
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.285}
+            size_hint: 0.4, 0.04
+            hint_text: 'O or 1'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature10
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.28}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput10
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.225}
+            size_hint: 0.4, 0.04
+            hint_text: 'O or 1'
+
+        BackToMainBtn:
+            pos_hint: {"x":0.13, "top":0.12}
+            size_hint: 0.17,0.07
+            text: "Back"
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            on_release:
+                # Goes back to the main page
+                app.root.current = "main"
+                # Transition animation when clicked
+                root.manager.transition.direction = "right"
+
+        NextBtn:
+            pos_hint:{"x":0.7, "top":0.12}
+            size_hint:0.17,0.07
+            text: "Next"
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            on_release:
+                # Transition animation when clicked
+                root.manager.transition.direction = "left"
+                # Calls the validate_input_window1() function from UI_main.py
+                root.validate_input_window1()
+
+# Style for buttons created above
+<BackToMainBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [25]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<NextBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [25]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+
+# NEXT WINDOW
+
+
+# Second prediction input page that takes in the second 10 inputs
+# from the user
+<PredictionWindow2>:
+
+    # Name/id for the window
+    name: "prediction2"
+
+    # Variables used in the window
+    userinput11 : userinput11
+    userinput12 : userinput12
+    userinput13 : userinput13
+    userinput14 : userinput14
+    userinput15 : userinput15
+    userinput16 : userinput16
+    userinput17 : userinput17
+    userinput18 : userinput18
+    userinput19 : userinput19
+    userinput20 : userinput20
+
+    # This window uses a float layout
+    FloatLayout:
+
+        Image:
+            source: 'heart.png'
+            size_hint_y: None
+            height: dp(50)
+            pos_hint: {"x": -0.12,"top":0.925}
+
+        Label:
+            text:"    Heart Disease\nPrediction System "
+            font_size: 20
+            font_name: 'Montserrat Regular 400'
+            color: (87/255.0, 85/255.0, 85/255.0, 1)
+            bold: True
+            pos_hint: {"x":0.35, "top":0.96}
+            size_hint: 0.4, 0.15
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature11
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.82}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput11
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.765}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 0 and 5'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature12
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.76}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput12
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.705}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 0 and 100'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature13
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.70}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput13
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.645}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 0 and 100'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature14
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.64}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput14
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.585}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 0 and 20'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature15
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.58}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput15
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.525}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 0 and 10'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature16
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.52}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput16
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.465}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 0 and 100'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature17
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.46}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput17
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.405}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 0 and 1000'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature18
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.40}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput18
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.345}
+            size_hint: 0.4, 0.04
+            hint_text: 'Between 0 and 100'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature19
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.34}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput19
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.285}
+            size_hint: 0.4, 0.04
+            hint_text: '0 or 1 or 2 or 3 or 4'
+
+        Label:
+            # Text label is taken from root variable in UI_main.py
+            text: root.feature20
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            color: (0, 0, 0, 1)
+            pos_hint: {"x":0.07, "top":0.28}
+            size_hint: 0.4, 0.15
+
+        TextInput:
+            font_size: (root.width**2 + root.height**2) / 17**4
+            font_name: 'Montserrat Regular 400'
+            id: userinput20
+            multiline: False
+            back_color: (0.157, 0.455, 0.753, 1.0)
+            pos_hint: {"x":0.4, "top":0.225}
+            size_hint: 0.4, 0.04
+            hint_text: 'No, Mild, Moderate, or Severe'
+
+        SubmitInputBtn:
+            pos_hint: {"x":0.25, "top":0.12}
+            size_hint: 0.5,0.07
+            text: "Submit"
+            font_size: (root.width**2 + root.height**2) / 15**4
+            font_name: 'Montserrat Regular 400'
+            on_release:
+                # Call the validate_input_window2() function from UI_main.py
+                root.validate_input_window2()
+                # Transition animation when page changes
+                root.manager.transition.direction = "left"
+
+# Style for button created above
+<SubmitInputBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [25]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+
+# NEXT WINDOW
+
+
+# Results window
+<ResultsWindow>:
+
+    # Name/id of the window
+    name: "results"
+
+    # This window uses the float layout
+    FloatLayout:
+
+        Image:
+            source: 'heart.png'
+            size_hint_y: None
+            height: dp(50)
+            pos_hint: {"x": -0.12,"top":0.925}
+
+        Label:
+            text:"    Heart Disease\nPrediction System "
+            font_size: 20
+            font_name: 'Montserrat Regular 400'
+            color: (87/255.0, 85/255.0, 85/255.0, 1)
+            bold: True
+            pos_hint: {"x":0.35, "top":0.96}
+            size_hint: 0.4, 0.15
+
+        ShowResultBtn:
+            pos_hint:{"x":0.2, "y": 0.55}
+            size_hint:0.6,0.13
+            text: "Show Results"
+            font_size: (root.width**2 + root.height**2) / 14**4
+            font_name: 'Montserrat Regular 400'
+            on_release:
+                # Call the get_result() function from UI_main.py
+                root.get_result()
+
+        BackToMainMenuBtn:
+            pos_hint:{"x":0.2, "y": 0.38}
+            size_hint:0.6,0.13
+            text: "Main Menu"
+            font_size: (root.width**2 + root.height**2) / 14**4
+            font_name: 'Montserrat Regular 400'
+            on_release:
+                # Move to the main menu window when clicked
+                app.root.current = "main"
+                # Animation transition when page moves
+                root.manager.transition.direction = "down"
+
+        RunAnotherPredictionBtn:
+            pos_hint:{"x":0.2, "y": 0.21}
+            size_hint:0.6,0.13
+            text: "Run Another Prediction"
+            font_size: (root.width**2 + root.height**2) / 14**4
+            font_name: 'Montserrat Regular 400'
+            on_release:
+                # Move to the first prediction window when clicked
+                app.root.current = "prediction"
+                # Animation transition when page moves
+                root.manager.transition.direction = "left"
+
+# Style for buttons created above
+<ShowResultBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (176/255.0, 94/255.0, 84/255.0, 1)
+    border_radius: [50]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<BackToMainMenuBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (173/255.0, 136/255.0, 132/255.0, 1)
+    border_radius: [50]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<RunAnotherPredictionBtn@Button>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    back_color: (173/255.0, 136/255.0, 132/255.0, 1)
+    border_radius: [50]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+# END OF FILE
+# DEVELOPED BY PRASHANT & TEAM 12 (FIT3164)
